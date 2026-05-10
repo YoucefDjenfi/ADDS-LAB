@@ -8,15 +8,6 @@ static int min_S(int a, int b) {
   return (a < b) ? a : b;
 }
 
-Trie_S* copy_trie_S(Trie_S* trie) {
-  Trie_S *new_trie = create_trie_S();
-  if (trie == NULL || trie->Root == NULL)
-    return new_trie;
-  char word[1000];
-  copying_trie_S(trie->Root, word, 0, new_trie->Root);
-  return new_trie;
-}
-
 void copying_trie_S(Trie_node_S *node, char *sentence, int i,
                     Trie_node_S *trie) {
   if (node == NULL || trie == NULL)
@@ -41,6 +32,15 @@ void copying_trie_S(Trie_node_S *node, char *sentence, int i,
       copying_trie_S(node->children[j], sentence, i + 1, trie);
     }
   }
+}
+
+Trie_S* copy_trie_S(Trie_S* trie) {
+  Trie_S *new_trie = create_trie_S();
+  if (trie == NULL || trie->Root == NULL)
+    return new_trie;
+  char word[1000];
+  copying_trie_S(trie->Root, word, 0, new_trie->Root);
+  return new_trie;
 }
 
 Trie_S *union_a_b_S(Trie_S *t1, Trie_S *t2) {

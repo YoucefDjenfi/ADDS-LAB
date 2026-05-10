@@ -419,7 +419,7 @@ void load_sentence_file_flow() {
         return;
     }
 
-    printf("  Loading sentences...\n");
+    show_spinner(1500, "Analyzing Content");
     to_lower_string(content);
     sanitize_text(content);
     file_S *fs = create_file_S();
