@@ -3,7 +3,7 @@
 
 #include "trie_machine_abstract.h"
 
-void help_travers_num(Trie_node *node, int *cpt);
+void help_traverse_num(Trie_node *node, int *cpt);
 int num_of_words(Trie *A);
 double calculateJaccard(Trie *a, Trie *b);
 void remove_stopwords(Trie *trie);

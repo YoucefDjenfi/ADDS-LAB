@@ -61,7 +61,7 @@ Trie *intersection(Trie *t1, Trie *t2) {
   return new_trie;
 }
 
-void help_travers_diff(Trie_node *node1, Trie_node *node2, Trie *trie, char *word,
+void help_traverse_diff(Trie_node *node1, Trie_node *node2, Trie *trie, char *word,
                   int i) {
   if (node1 == NULL || trie == NULL || node2 == NULL) {
     return;
@@ -76,7 +76,7 @@ void help_travers_diff(Trie_node *node1, Trie_node *node2, Trie *trie, char *wor
   for (int j = 0; j < 26; j++) {
     if (node1->children[j] != NULL) {
       word[i] = 'a' + j;
-      help_travers_diff(node1->children[j], node2, trie, word, i + 1);
+      help_traverse_diff(node1->children[j], node2, trie, word, i + 1);
     }
   }
 }
@@ -86,7 +86,7 @@ Trie *difference(Trie *t1, Trie *t2) {
   if (t1 == NULL || t1->Root == NULL || t2 == NULL)
     return new_trie;
   char word[1000];
-  help_travers_diff(t1->Root, t2->Root, new_trie, word, 0);
+  help_traverse_diff(t1->Root, t2->Root, new_trie, word, 0);
   return new_trie;
 }
 

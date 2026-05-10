@@ -24,7 +24,7 @@ void delete_word(Trie_node **root, char *s);
 void help_free_trie(Trie_node *node);
 void free_Trie(Trie *trie);
 bool start_with(Trie *trie, char *s);
-void help_travers_most_common(Trie_node *node, char *word, int i, char *best_word, int *max_count);
+void help_traverse_most_common(Trie_node *node, char *word, int i, char *best_word, int *max_count);
 char *most_common_roots(Trie *trie);
 void help_print_words(Trie_node *root, char *word, int j);
 void print_words(Trie *trie);

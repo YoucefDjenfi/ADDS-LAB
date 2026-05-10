@@ -14,15 +14,12 @@ void sanitize_text(char *str) {
     if (str == NULL) return;
     int i = 0, j = 0;
     while (str[i]) {
-        // Keep alphabetic characters, spaces, and newlines
-        // Note: paragraph_structure.c uses spaces and dots to split words/sentences.
-        // So we should keep dots too if we want to preserve paragraph/sentence structure.
-        if (isalpha((unsigned char)str[i]) || isspace((unsigned char)str[i]) || str[i] == '.') {
+        // preserve sentence delimiters and newlines; collapse everything else
+        if (isalpha((unsigned char)str[i]) || isspace((unsigned char)str[i]) || str[i] == '\n' || 
+            str[i] == '.' || str[i] == '!' || str[i] == '?') {
             str[j++] = str[i];
-        } else {
-            // Replace other punctuation with space to avoid merging words
-            str[j++] = ' ';
-        }
+        } 
+        else  str[j++] = ' ';
         i++;
     }
     str[j] = '\0';

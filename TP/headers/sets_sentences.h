@@ -7,6 +7,6 @@ Trie_S* union_a_b_S(Trie_S* t1, Trie_S* t2);
 Trie_S* intersection_S(Trie_S* t1, Trie_S* t2);
 Trie_S* difference_S(Trie_S* t1, Trie_S* t2);
 Trie_S* copy_trie_S(Trie_S* trie);
-char** travers_Trie_S(Trie_S* trie, int* k);
+char** traverse_Trie_S(Trie_S* trie, int* k);
 
 #endif

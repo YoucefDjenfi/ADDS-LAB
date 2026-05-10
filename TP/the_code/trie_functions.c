@@ -151,7 +151,7 @@ bool start_with(Trie *trie, char *s) {
   return true;
 }
 
-void help_travers_most_common(Trie_node *node, char *word, int i, char *best_word, int *max_count) {
+void help_traverse_most_common(Trie_node *node, char *word, int i, char *best_word, int *max_count) {
   if (node == NULL) return;
   if (node->is_end_of_word) {
     if (node->count > *max_count) {
@@ -163,7 +163,7 @@ void help_travers_most_common(Trie_node *node, char *word, int i, char *best_wor
   for (int j = 0; j < 26; j++) {
     if (node->children[j] != NULL) {
       word[i] = 'a' + j;
-      help_travers_most_common(node->children[j], word, i + 1, best_word, max_count);
+      help_traverse_most_common(node->children[j], word, i + 1, best_word, max_count);
     }
   }
 }
@@ -173,7 +173,7 @@ char *most_common_roots(Trie *trie) {
   char best_word[256] = "";
   char current_word[256] = "";
   int max_count = -1;
-  help_travers_most_common(trie->Root, current_word, 0, best_word, &max_count);
+  help_traverse_most_common(trie->Root, current_word, 0, best_word, &max_count);
   
   if (max_count != -1) {
     return strdup(best_word);

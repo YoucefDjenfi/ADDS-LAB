@@ -3,21 +3,33 @@
 
 #include "trie_machine_abstract.h"
 
-typedef struct file_node {
+typedef struct para {
   Trie *trie;
-  struct file_node *next;
-  struct file_node *prev;
-} file_node;
+  struct para *next;
+  struct para *prev;
+} para;
 
 typedef struct file {
-  file_node *head;
-  file_node *tail;
+  para *head;
+  para *tail;
 } file;
 
-void prep_file_node(file_node *node);
-file_node *create_file_node();
+// paragraph-level functions
+para *create_para();
+void para_ass_adr_trie(para *p, Trie *t);
+void para_ass_adr_next(para *p, para *q);
+void para_ass_adr_prev(para *p, para *q);
+Trie *para_get_trie(para *p);
+para *para_get_next(para *p);
+para *para_get_prev(para *p);
+
+// file-level fucntions 
 file *create_file();
 void free_file(file *f);
-void fill_file(file *f, char *text, int s);
+void file_enqueue_para(file *f, char *text, int nb); 
+int file_is_empty(file *f);
+Trie *file_get_trie_by_pos(file *f, int n);
+int file_count(file *f);
+file *file_get_head(file *f); 
 
 #endif // FILE_STRUCTURE_H

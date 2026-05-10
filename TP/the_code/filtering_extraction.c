@@ -4,7 +4,7 @@
 #include <string.h>
 
 
-void help_travers_num(Trie_node *node, int *cpt) {
+void help_traverse_num(Trie_node *node, int *cpt) {
   if (node == NULL || cpt == NULL) {
     return;
   }
@@ -13,7 +13,7 @@ void help_travers_num(Trie_node *node, int *cpt) {
   }
   for (int j = 0; j < 26; j++) {
     if (node->children[j] != NULL) {
-      help_travers_num(node->children[j], cpt);
+      help_traverse_num(node->children[j], cpt);
     }
   }
 }
@@ -23,7 +23,7 @@ int num_of_words(Trie *A) {
     return 0;
   }
   int cpt = 0;
-  help_travers_num(A->Root, &cpt);
+  help_traverse_num(A->Root, &cpt);
   return cpt;
 }
 

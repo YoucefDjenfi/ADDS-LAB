@@ -53,7 +53,7 @@ char* read_file_to_string(const char* filename) {
 
 Trie* merge_file_to_trie(file *par) {
     Trie *all_words = create_trie();
-    file_node *curr = par->head;
+    para *curr = par->head;
     while (curr) {
         Trie *temp = union_a_b(all_words, curr->trie);
         free_Trie(all_words);
@@ -154,7 +154,7 @@ void load_file_flow() {
     sanitize_text(content);
 
     file *par = create_file();
-    fill_file(par, content, strlen(content));
+    file_enqueue_para(par, content, strlen(content));
     free(content);
 
     show_spinner(1500, "Analyzing Content");
