@@ -33,48 +33,40 @@ void free_file(file *file) {
   free(file);
 }
 
-void file_enqueue_para(file *file, char *text, int nb) {
-  if (file == NULL || text == NULL) return;
+void file_enqueue_para(file *f, char *text, int nb) {
+  if (f == NULL || text == NULL) return;
   char word[1000];
   int j = 0;
-  if (file->head == NULL) {
-    file->head = file->tail = create_para();
+  if (f->head == NULL) {
+    f->head = f->tail = create_para();
   }
-
-  para *p = file->tail;
+  para *p = f->tail;
   for (int i = 0; i < nb; i++) {
-    // case01: new paragraph
-    if (text[i] == '\n\n') {
+    if (text[i] == '\n' && i + 1 < nb && text[i + 1] == '\n') {
       if (j > 0) {
         word[j] = '\0';
         insert(para_get_trie(p), word, 1);
         j = 0;
       }
-      // Only create a new node if there is potentially more text
-      if (i < nb - 1) {
-        para *temp = create_para();
-        p->next = temp;
-        temp->prev = p;
-        p = temp;
-        file->tail = p;
-      }
-    }
-    else if (text[i] == ' ' || text[i] == '\n' || text[i] == '\t' || 
-    text[i] == '.' || text[i] == '!' || text[i] == '?') {
+      para *temp = create_para();
+      para_ass_adr_next(p, temp);
+      para_ass_adr_prev(temp, p);
+      p = temp;
+      f->tail = p;
+      i++;
+    } 
+    else if (text[i] == ' ' || text[i] == '\n' || text[i] == '\t' ||
+      text[i] == '.' || text[i] == '!' || text[i] == '?') {
       if (j > 0) {
         word[j] = '\0';
         insert(para_get_trie(p), word, 1);
         j = 0;
       }
-    }
+    } 
     else {
-      if (j < 999) {
-        word[j] = text[i];
-        j++;
-      }
+      if (j < 999) word[j++] = text[i];
     }
   }
-  // Handle last word if no period/space at end
   if (j > 0) {
     word[j] = '\0';
     insert(para_get_trie(p), word, 1);
@@ -133,7 +125,7 @@ Trie *file_get_trie_by_pos(file *f, int n) {     // pos is 1-indexed
   return para_get_trie(p);
 }
 
-int file_count(file *f) {
+int loaded_file_count(file *f) {
   if (f == NULL) return 0;
   para *p = f->head;
   int n = 0;

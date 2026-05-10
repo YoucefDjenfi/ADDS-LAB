@@ -22,7 +22,7 @@ typedef struct {
 } LoadedFile;
 
 LoadedFile loaded_files[MAX_FILES];
-int file_count = 0;
+int loaded_file_count = 0;
 
 typedef struct {
     char filename[256];
@@ -64,11 +64,11 @@ Trie* merge_file_to_trie(file *par) {
 }
 
 void clean_up() {
-    for (int i = 0; i < file_count; i++) {
+    for (int i = 0; i < loaded_file_count; i++) {
         free_file(loaded_files[i].par);
         free_Trie(loaded_files[i].combined_trie);
     }
-    file_count = 0;
+    loaded_file_count = 0;
 }
 
 void show_splash_screen() {
@@ -108,7 +108,7 @@ void display_menu() {
 
     printf("\n");
     draw_divider();
-    draw_footer(file_count, sentence_file_count);
+    draw_footer(loaded_file_count, sentence_file_count);
     printf("\n");
     printf("  %sChoice:%s ", COLOR_BOLD, COLOR_RESET);
     fflush(stdout);
@@ -117,11 +117,11 @@ void display_menu() {
 // Display-only: shows the file list without waiting for input
 void show_file_list() {
     print_header("LOADED FILES");
-    if (file_count == 0) {
+    if (loaded_file_count == 0) {
         printf("  %sNo files loaded yet.%s\n", COLOR_DIM, COLOR_RESET);
         return;
     }
-    for (int i = 0; i < file_count; i++) {
+    for (int i = 0; i < loaded_file_count; i++) {
         printf("  %s[%d]%s %s%s%s\n", COLOR_YELLOW, i + 1, COLOR_RESET, COLOR_LIGHT_BLUE, loaded_files[i].filename, COLOR_RESET);
     }
     draw_divider();
@@ -134,7 +134,7 @@ void list_files() {
 }
 
 void load_file_flow() {
-    if (file_count >= MAX_FILES) {
+    if (loaded_file_count >= MAX_FILES) {
         printf("\n  %sMaximum files reached.%s\n", COLOR_YELLOW, COLOR_RESET);
         ms_sleep(1000);
         return;
@@ -161,10 +161,10 @@ void load_file_flow() {
 
     Trie *combined = merge_file_to_trie(par);
 
-    strcpy(loaded_files[file_count].filename, filename);
-    loaded_files[file_count].par = par;
-    loaded_files[file_count].combined_trie = combined;
-    file_count++;
+    strcpy(loaded_files[loaded_file_count].filename, filename);
+    loaded_files[loaded_file_count].par = par;
+    loaded_files[loaded_file_count].combined_trie = combined;
+    loaded_file_count++;
 
     printf("\n");
     print_centered("File loaded successfully!", COLOR_YELLOW);
@@ -172,7 +172,7 @@ void load_file_flow() {
 }
 
 void set_operation_flow(int type) {
-    if (file_count < 2) {
+    if (loaded_file_count < 2) {
         printf("\n  %sNeed at least 2 files loaded.%s\n", COLOR_YELLOW, COLOR_RESET);
         ms_sleep(1000);
         return;
@@ -184,7 +184,7 @@ void set_operation_flow(int type) {
     printf("  Select second file index: ");
     scanf("%d", &idx2);
 
-    if (idx1 < 1 || idx1 > file_count || idx2 < 1 || idx2 > file_count) {
+    if (idx1 < 1 || idx1 > loaded_file_count || idx2 < 1 || idx2 > loaded_file_count) {
         printf("  %sInvalid selection.%s\n", COLOR_YELLOW, COLOR_RESET);
         ms_sleep(1000);
         return;
@@ -221,7 +221,7 @@ void set_operation_flow(int type) {
 }
 
 void similarity_flow() {
-    if (file_count < 2) {
+    if (loaded_file_count < 2) {
         printf("\n  %sNeed at least 2 files loaded.%s\n", COLOR_YELLOW, COLOR_RESET);
         ms_sleep(1000);
         return;
@@ -233,7 +233,7 @@ void similarity_flow() {
     printf("  Select second file index: ");
     scanf("%d", &idx2);
 
-    if (idx1 < 1 || idx1 > file_count || idx2 < 1 || idx2 > file_count) {
+    if (idx1 < 1 || idx1 > loaded_file_count || idx2 < 1 || idx2 > loaded_file_count) {
         printf("  %sInvalid selection.%s\n", COLOR_YELLOW, COLOR_RESET);
         ms_sleep(1000);
         return;
@@ -250,7 +250,7 @@ void similarity_flow() {
 }
 
 void find_topic_flow() {
-    if (file_count == 0) {
+    if (loaded_file_count == 0) {
         printf("\n  %sNo files loaded.%s\n", COLOR_YELLOW, COLOR_RESET);
         ms_sleep(1000);
         return;
@@ -260,7 +260,7 @@ void find_topic_flow() {
     printf("  Select file index: ");
     scanf("%d", &idx);
 
-    if (idx < 1 || idx > file_count) {
+    if (idx < 1 || idx > loaded_file_count) {
         printf("  %sInvalid selection.%s\n", COLOR_YELLOW, COLOR_RESET);
         ms_sleep(1000);
         return;
@@ -279,7 +279,7 @@ void find_topic_flow() {
 }
 
 void prefix_search_flow() {
-    if (file_count == 0) {
+    if (loaded_file_count == 0) {
         printf("\n  %sNo files loaded.%s\n", COLOR_YELLOW, COLOR_RESET);
         ms_sleep(1000);
         return;
@@ -289,7 +289,7 @@ void prefix_search_flow() {
     printf("  Select file index: ");
     scanf("%d", &idx);
 
-    if (idx < 1 || idx > file_count) {
+    if (idx < 1 || idx > loaded_file_count) {
         printf("  %sInvalid selection.%s\n", COLOR_YELLOW, COLOR_RESET);
         ms_sleep(1000);
         return;
@@ -317,7 +317,7 @@ void prefix_search_flow() {
 }
 
 void prefix_count_flow() {
-    if (file_count == 0) {
+    if (loaded_file_count == 0) {
         printf("\n  %sNo files loaded.%s\n", COLOR_YELLOW, COLOR_RESET);
         ms_sleep(1000);
         return;
@@ -327,7 +327,7 @@ void prefix_count_flow() {
     printf("  Select file index: ");
     scanf("%d", &idx);
 
-    if (idx < 1 || idx > file_count) {
+    if (idx < 1 || idx > loaded_file_count) {
         printf("  %sInvalid selection.%s\n", COLOR_YELLOW, COLOR_RESET);
         ms_sleep(1000);
         return;
@@ -416,17 +416,19 @@ void load_sentence_file_flow() {
     }
 
     printf("  Loading sentences...\n");
+    to_lower_string(content);
+    sanitize_text(content);
     file_S *fs = create_file_S();
-    fill_file_S(fs, content, strlen(content));
+    file_enqueue_para_S(fs, content, strlen(content));
     free(content);
 
     Trie_S *combined = create_trie_S();
-    file_node_S *curr = fs->head;
+    para_S *curr = fs->head;
     while (curr) {
-        Trie_S *temp = union_a_b_S(combined, curr->paragraph_trie);
+        Trie_S *temp = union_a_b_S(combined, para_get_trie_S(curr));
         free_Trie_S(combined);
         combined = temp;
-        curr = curr->next;
+        curr = para_get_next_S(curr);
     }
 
     strcpy(loaded_sentences[sentence_file_count].filename, filename);
@@ -564,7 +566,7 @@ void start_sentence_tui() {
 
         printf("\n");
         draw_divider();
-        draw_footer(file_count, sentence_file_count);
+        draw_footer(loaded_file_count, sentence_file_count);
         printf("\n");
         printf("  %sChoice:%s ", COLOR_BOLD, COLOR_RESET);
         fflush(stdout);
@@ -609,7 +611,7 @@ void start_tui() {
         
         printf("\n");
         draw_divider();
-        draw_footer(file_count, sentence_file_count);
+        draw_footer(loaded_file_count, sentence_file_count);
         printf("\n");
         printf("  %sChoice:%s ", COLOR_BOLD, COLOR_RESET);
         fflush(stdout);

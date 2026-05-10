@@ -108,6 +108,8 @@ void travers_diff_S(Trie_node_S *node1, Trie_node_S *node2, Trie_S *trie,
 Trie_S *difference_S(Trie_S *t1, Trie_S *t2) {
   if (t1 == NULL || t1->Root == NULL)
     return create_trie_S();
+  if (t2 == NULL || t2->Root == NULL)
+    return copy_trie_S(t1);
   Trie_S *new_trie = create_trie_S();
   char sentence[1000];
   travers_diff_S(t1->Root, t2->Root, new_trie, sentence, 0);

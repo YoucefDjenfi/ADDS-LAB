@@ -29,7 +29,6 @@ void free_file(file *f);
 void file_enqueue_para(file *f, char *text, int nb); 
 int file_is_empty(file *f);
 Trie *file_get_trie_by_pos(file *f, int n);
-int file_count(file *f);
-file *file_get_head(file *f); 
+int loaded_file_count(file *f);
 
 #endif // FILE_STRUCTURE_H
