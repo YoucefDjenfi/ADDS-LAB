@@ -10,12 +10,38 @@ para_S *create_para_S() {
   }
   return node;
 }
-void para_ass_adr_trie_S(para_S *p, Trie_S *t);
-void para_ass_adr_next_S(para_S *p, para_S *q);
-void para_ass_adr_prev_S(para_S *p, para_S *q);
-Trie_S *para_get_trie_S(para_S *p);
-para_S *para_get_next_S(para_S *p);
-para_S *para_get_prev_S(para_S *p);
+void para_ass_adr_trie_S(para_S *p, Trie_S *t) {
+  if (p == NULL) return;
+  p->trie = t;
+  return;
+}
+
+void para_ass_adr_next_S(para_S *p, para_S *q) {
+  if (p == NULL) return;
+  p->next = q;
+  return;
+}
+
+void para_ass_adr_prev_S(para_S *p, para_S *q) {
+  if (p == NULL) return;
+  p->prev = q;
+  return;
+}
+
+Trie_S *para_get_trie_S(para_S *p) {
+  if (p == NULL) return NULL;
+  return p->trie;
+}
+
+para_S *para_get_next_S(para_S *p) {
+  if (p == NULL) return NULL;
+  return p->next;
+}
+
+para_S *para_get_prev_S(para_S *p) {
+  if (p == NULL) return NULL;
+  return p->prev;
+}
 
 // file-level fucntions 
 file_S *create_file_S() {

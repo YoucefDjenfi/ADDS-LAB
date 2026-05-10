@@ -25,14 +25,11 @@ para_S *para_get_next_S(para_S *p);
 para_S *para_get_prev_S(para_S *p);
 
 // file-level fucntions 
-file_S *create_file_S();
 void file_enqueue_para_S(file_S* f, char* text, int size);
 void free_file_S(file_S *f);
-
 int file_is_empty_S(file_S *f);
 Trie_S *file_get_trie_by_pos_S(file_S *f, int n);
 int file_count_S(file_S *f);
-file_S *file_get_head_S(file_S *f); 
 void free_file_S(file_S* f);
 
 #endif
