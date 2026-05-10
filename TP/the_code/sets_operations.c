@@ -34,7 +34,7 @@ Trie *union_a_b(Trie *t1, Trie *t2) {
   return new_trie;
 }
 
-void travers_inter(Trie_node *node1, Trie_node *node2, char *word, int i,
+void traverse_inter(Trie_node *node1, Trie_node *node2, char *word, int i,
                    Trie_node *root) {
   if (node1 == NULL || node2 == NULL || root == NULL) {
     return;
@@ -47,7 +47,7 @@ void travers_inter(Trie_node *node1, Trie_node *node2, char *word, int i,
   for (int j = 0; j < 26; j++) {
     if (node1->children[j] != NULL && node2->children[j] != NULL) {
       word[i] = 'a' + j;
-      travers_inter(node1->children[j], node2->children[j], word, i + 1,
+      traverse_inter(node1->children[j], node2->children[j], word, i + 1,
                          root);
     }
   }
@@ -56,7 +56,7 @@ void travers_inter(Trie_node *node1, Trie_node *node2, char *word, int i,
 Trie *intersection(Trie *t1, Trie *t2) {
   Trie *new_trie = create_trie();
   char word[1000];
-  travers_inter(t1->Root, t2->Root, word, 0, new_trie->Root);
+  traverse_inter(t1->Root, t2->Root, word, 0, new_trie->Root);
 
   return new_trie;
 }

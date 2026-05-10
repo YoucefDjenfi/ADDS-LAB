@@ -15,8 +15,8 @@ void sanitize_text(char *str) {
     int i = 0, j = 0;
     while (str[i]) {
         // preserve sentence delimiters and newlines; collapse everything else
-        if (isalpha((unsigned char)str[i]) || isspace((unsigned char)str[i]) || str[i] == '\n' || 
-            str[i] == '.' || str[i] == '!' || str[i] == '?') {
+        if (isalpha((unsigned char)str[i]) || isspace((unsigned char)str[i]) ||
+    str[i] == '.' || str[i] == '!' || str[i] == '?') {
             str[j++] = str[i];
         } 
         else  str[j++] = ' ';

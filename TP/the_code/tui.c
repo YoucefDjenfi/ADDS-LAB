@@ -90,9 +90,8 @@ void show_splash_screen() {
     show_spinner(1000, "Loading Word Module");
     show_spinner(800, "Loading Sentence Module");
     show_spinner(500, "Finalizing UI");
-    ms_sleep(500);
+    ms_sleep(1500);
     printf("\n");
-    press_any_key();
 }
 
 void display_menu() {
@@ -240,8 +239,11 @@ void similarity_flow() {
     }
     idx1--; idx2--;
 
-    int sim = check_similarity(copy_trie(loaded_files[idx1].combined_trie), 
-                              copy_trie(loaded_files[idx2].combined_trie));
+    Trie *copy_a = copy_trie(loaded_files[idx1].combined_trie);
+    Trie *copy_b = copy_trie(loaded_files[idx2].combined_trie);
+    int sim = check_similarity(copy_a, copy_b);
+    free_Trie(copy_a);
+    free_Trie(copy_b);
     printf("\n  %sSimilarity Profile:%s\n", COLOR_LIGHT_BLUE, COLOR_RESET);
     draw_divider();
     printf("  Jaccard Index (Word Level): %d%%\n", sim);
@@ -267,7 +269,9 @@ void find_topic_flow() {
     }
     idx--;
 
-    char *t = topic(copy_trie(loaded_files[idx].combined_trie));
+    Trie *copy_a = copy_trie(loaded_files[idx].combined_trie);
+    char *t = topic(copy_a);
+    free_Trie(copy_a);
     if (t) {
         printf("\n  %sMain Topic Identified:%s %s\n", COLOR_LIGHT_BLUE, COLOR_RESET, t);
         free(t);

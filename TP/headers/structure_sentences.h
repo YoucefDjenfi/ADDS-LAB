@@ -17,7 +17,6 @@ typedef struct file_S {
 
 // paragraph-level functions
 para_S *create_para_S();
-
 void para_ass_adr_trie_S(para_S *p, Trie_S *t);
 void para_ass_adr_next_S(para_S *p, para_S *q);
 void para_ass_adr_prev_S(para_S *p, para_S *q);
